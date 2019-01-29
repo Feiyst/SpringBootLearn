@@ -2,7 +2,11 @@ package com.feiyst.springbootlearn.dao.model;
 
 import java.util.Date;
 
-public class User {
+/**
+ * @author ur0781
+ */
+public class User{
+
     private String id;
 
     private String userName;

@@ -1,23 +1,27 @@
 package com.feiyst.springbootlearn.unit;
 
+import java.io.Serializable;
+
 /**
  * @author: feiyst
  * @modified by:
  * @description: 异常数据实体类
  * @create: 2018-12-18 14:32
  **/
-public class Result<T> {
+public class Result<T> implements Serializable{
 
-    private Integer code;
+    private static final long serialVersionUID = 7156526077883281625L;
+
+    private String code;
     private String message;
     private String url;
     private T data;
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

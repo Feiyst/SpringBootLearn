@@ -1,5 +1,8 @@
 package com.feiyst.springbootlearn.unit;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * @author: feiyst
  * @modified by:
@@ -15,9 +18,9 @@ public class ResultUntil {
      */
     public static Result success(Object object) {
         Result result = new Result();
-        result.setCode(200);
+        result.setCode("200");
         result.setMessage("success");
-        result.setData(object);
+        result.setData(JSON.toJSONString(object));
         return result;
     }
 
@@ -35,7 +38,7 @@ public class ResultUntil {
      * @param msg
      * @return
      */
-    public static Result error(Integer code,String msg){
+    public static Result error(String code,String msg){
         Result result = new Result();
         result.setCode(code);
         result.setMessage(msg);
