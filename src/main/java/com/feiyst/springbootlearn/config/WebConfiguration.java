@@ -32,7 +32,7 @@ public class WebConfiguration {
         registrationBean.setFilter(new MyFilter());
         registrationBean.addUrlPatterns("/*");
         registrationBean.addInitParameter("paramName", "paramValue");
-        registrationBean.setName("MyFilter");
+        registrationBean.setName("WebFilter");
         registrationBean.setOrder(1);
         return registrationBean;
     }
@@ -49,7 +49,7 @@ public class WebConfiguration {
         @Override
         public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
-            System.out.println("This is MyFilter, url:" + request.getRequestURI());
+            System.out.println("This is WebFilter, url:" + request.getRequestURI());
             // 执行过滤
             filterChain.doFilter(servletRequest, servletResponse);
         }

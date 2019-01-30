@@ -1,4 +1,4 @@
-package com.feiyst.springbootlearn.mapping;
+package com.feiyst.springbootlearn.dao.mapping;
 
 import com.feiyst.springbootlearn.dao.model.User;
 import com.feiyst.springbootlearn.dao.model.UserExample;

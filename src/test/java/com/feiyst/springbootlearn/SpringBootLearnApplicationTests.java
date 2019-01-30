@@ -12,6 +12,5 @@ public class SpringBootLearnApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
-
 }
 
