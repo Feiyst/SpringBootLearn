@@ -3,6 +3,7 @@ package com.feiyst.springbootlearn.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
@@ -23,6 +24,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.lang.reflect.Method;
 import java.time.Duration;
 
 
@@ -34,31 +36,44 @@ import java.time.Duration;
  **/
 @Configuration
 @EnableCaching
+@Slf4j
 public class RedisConfig extends CachingConfigurerSupport{
-
-    /**
-     * Logger
-     */
-    private static final Logger log = LoggerFactory.getLogger(RedisConfiguration.class);
 
     @Bean
     @Override
     public KeyGenerator keyGenerator() {
+
+        KeyGenerator keyGenerator = new KeyGenerator() {
+            @Override
+            public Object generate(Object o, Method method, Object... objects) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(o.getClass().getSimpleName());
+                sb.append(":");
+                sb.append(method.getName());
+                for (Object obj: objects) {
+                    sb.append(":" + String.valueOf(obj));
+                }
+                String reToUse = String.valueOf(sb);
+                return reToUse;
+            }
+        };
+        return keyGenerator;
+
         // 设置自动key的生成规则，配置spring boot的注解，进行方法级别的缓存
         // 使用：进行分割，可以很多显示出层级关系
         // 这里其实就是new了一个KeyGenerator对象，只是这是lambda表达式的写法，我感觉很好用，大家感兴趣可以去了解下
-        return (target, method, params) -> {
-            StringBuilder sb = new StringBuilder();
-            sb.append(target.getClass().getName());
-            sb.append(":");
-            sb.append(method.getName());
-            for (Object obj : params) {
-                sb.append(":" + String.valueOf(obj));
-            }
-            String rsToUse = String.valueOf(sb);
-            log.info("自动生成Redis Key -> [{}]", rsToUse);
-            return rsToUse;
-        };
+//        return (target, method, params) -> {
+//            StringBuilder sb = new StringBuilder();
+//            sb.append(target.getClass().getName());
+//            sb.append(":");
+//            sb.append(method.getName());
+//            for (Object obj : params) {
+//                sb.append(":" + String.valueOf(obj));
+//            }
+//            String rsToUse = String.valueOf(sb);
+//            log.info("自动生成Redis Key -> [{}]", rsToUse);
+//            return rsToUse;
+//        };
     }
 
     @Bean

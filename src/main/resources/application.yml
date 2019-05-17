@@ -1,7 +1,7 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/xxxx?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/shiro?useSSL=false&serverTimezone=UTC
     username: root
     password: root
   # 配置监控统计拦截的filters,去掉后监控界面sql将无法统计,'wall'用于防火墙
